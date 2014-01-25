@@ -7,33 +7,40 @@ public class Tile : MonoBehaviour {
 	[SerializeField]
 	Transform _tileSprite;
 
-	[SerializeField]
-	AnimationCurve _moveUpCurve;
-
 	public bool walkable;
 
 	void Start()
 	{
 		_tileSprite.localPosition = Vector3.down * 100.0f;
+		MoveToPlace(null);
 	}
 
-	public Coroutine MoveToPlace(Transform __player)
+	public Coroutine MoveToPlace(Transform __player = null)
 	{
 		return StartCoroutine(_MoveToPlace(__player));
 	}
 
 	IEnumerator _MoveToPlace(Transform __player)
 	{
-		float __dist = (__player.position - transform.position).magnitude;
+		float __dist = 0;
+		if (__player != null)
+		{
+			__dist = (__player.position - transform.position).magnitude;
+		}
+		else
+		{
+			__dist = transform.position.magnitude;
+		}
 
 		Vector3 __startPos = _tileSprite.transform.localPosition;
 
 
-		float __time = Mathf.Max(1 - __dist * 0.1f, 0);
+		float __time = -__dist * 0.2f - Random.value * 0.3f;
 
 		while (__time < 1)
 		{
-			_tileSprite.transform.localPosition = Vector3.Lerp(__startPos, Vector3.zero, _moveUpCurve.Evaluate(__time));
+			__time += Time.deltaTime / 2.0f;
+			_tileSprite.transform.localPosition = __startPos * (1-TileData.GetCurve().Evaluate(__time));
 			yield return null;
 		}
 	}
