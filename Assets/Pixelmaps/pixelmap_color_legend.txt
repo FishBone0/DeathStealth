@@ -7,3 +7,4 @@ Gray - Vents/Canals (for sneaking)
 White - Floor
 Yellow - Entrances & Exits
 Red - Stationary Enemy
+Brown - Destructible Boxes
