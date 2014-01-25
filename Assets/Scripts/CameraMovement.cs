@@ -16,6 +16,6 @@ public class CameraMovement : MonoBehaviour {
 
 	void FixedUpdate (){
 		var player = GameObject.FindGameObjectWithTag ("Player");
-		transform.position = new Vector3 (transform.position.x - (transform.position.x - player.transform.position.x)/10, transform.position.y - (transform.position.y - player.transform.position.y)/10, -10);
+		transform.position = new Vector3 ( transform.position.x - (transform.position.x - player.transform.position.x)/10, transform.position.y - (transform.position.y - player.transform.position.y)/10, -10);
 	}
 }
