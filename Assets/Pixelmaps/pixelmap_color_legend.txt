@@ -1,0 +1,9 @@
+Pixelmap Color Code
+
+- - -
+
+Black - Walls
+Gray - Vents/Canals (for sneaking)
+White - Floor
+Yellow - Entrances & Exits
+Red - Stationary Enemy
