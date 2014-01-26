@@ -11,7 +11,8 @@ GameObject:
   - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
   - 61: {fileID: 6100000}
-  m_Layer: 0
+  - 114: {fileID: 11400000}
+  m_Layer: 8
   m_Name: Gib
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +41,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_FixedAngle: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -55,6 +56,23 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4560e68244a45f9a0f02d2349333eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprite:
+  - {fileID: 21300000, guid: 3a4e59573060c44e19d02862346865a9, type: 3}
+  - {fileID: 21300000, guid: 3e1e6552314b4428bbe62bc11495c988, type: 3}
+  - {fileID: 21300000, guid: 1eba4571fb621447495f9c29a81bc032, type: 3}
+  - {fileID: 21300000, guid: 229bad4c399cb4c9496bad13303a6ba1, type: 3}
+  - {fileID: 21300000, guid: aa42ab30354fd441491195db5806d409, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

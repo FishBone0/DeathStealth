@@ -67,7 +67,8 @@ public class Room : MonoBehaviour {
 				{
 					SamuraiScript __samurai = Instantiate(TileData.GetSamurai()) as SamuraiScript;
 					__samurai.roomParent = this;
-					__samurai.transform.position = new Vector3(__x, __y) + transform.position;
+					__samurai.transform.parent = transform;
+					__samurai.transform.localPosition = new Vector3 (__x, __y);
 				}
 
 
@@ -507,6 +508,7 @@ public class Room : MonoBehaviour {
 					continue;
 				}
 
+				//Debug.Log(__neighbour);
 				if (!_tiles[__neighbour].walkable)
 				{
 					continue;
@@ -553,7 +555,7 @@ public class Room : MonoBehaviour {
 	{
 		int __currentX = __index % _height;
 		int __currentY = __index / _height;
-		Debug.Log(__currentX + ", " + __currentY);
+	
 		List<int> __neighbours = new List<int>();
 
 		if (__currentX - 1 >= 0 && __currentX - 1 < _width)

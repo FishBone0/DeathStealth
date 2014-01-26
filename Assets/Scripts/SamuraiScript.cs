@@ -126,6 +126,8 @@ public class SamuraiScript : Damagable {
 			Explode ();
 			Destroy (gameObject);
 		}
+
+		//CheckRoute();
 	}
 
 	void unHit(){
@@ -138,7 +140,8 @@ public class SamuraiScript : Damagable {
 		int __to = roomParent.IndexFromWorldPos(PlayerControl.Instance.transform.position);
 
 		List<int> __wayPoints = roomParent.GetRoute(__from, __to);
-		if (__wayPoints.Count>1)
+	
+		if (__wayPoints != null &&  __wayPoints.Count>1)
 		{
 			Vector2 __goTo = roomParent.WorldPosFromIndex(__wayPoints[1]);
 			Debug.DrawLine(__goTo, transform.position);
