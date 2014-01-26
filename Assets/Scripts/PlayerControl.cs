@@ -35,6 +35,21 @@ public class PlayerControl : Damagable {
 		get {return _instance;}
 	}
 
+	public Coroutine PauseOne()
+	{
+		return StartCoroutine(_PauseOne());
+	}
+
+	IEnumerator _PauseOne()
+	{
+		rigidbody2D.velocity = Vector2.zero;
+		anim.SetFloat("Speed", 0);
+
+		enabled = false;
+		yield return new WaitForSeconds(1.0f);
+		enabled = true;
+	}
+
 	void Start(){
 		anim = GetComponent<Animator> ();
 	}
@@ -87,12 +102,15 @@ public class PlayerControl : Damagable {
 		foreach(Collider2D temp in array){
 			Debug.Log ("Checking temp in array");
 		 	
-			Damagable dmgble = temp.GetComponent<Damagable>();
-			if(dmgble != null){
-				Debug.Log ("Damagable not null");
-				dmgble.Damage(10);
+			if (temp != null)
+			{
+				Damagable dmgble = temp.GetComponent<Damagable>();
+				if(dmgble != null)
+				{
+					Debug.Log ("Damagable not null");
+					dmgble.Damage(10);
+				}
 			}
-
 		}
 	}
 

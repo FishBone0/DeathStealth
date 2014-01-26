@@ -356,6 +356,8 @@ public class Room : MonoBehaviour {
 				_entrenceRoom.RemoveExits(this);
 				_entrenceRoom.MoveOut(PlayerControl.Instance.transform);
 			}
+
+			PlayerControl.Instance.PauseOne();
 		}
 	}
 

@@ -9,6 +9,38 @@ public class Tile : MonoBehaviour {
 
 	public bool walkable;
 
+	[SerializeField]
+	Sprite[] _spriteSheet;
+
+	SpriteRenderer _sprite;
+
+	Vector2 __origPos;
+
+
+	public void ChangeSprite(int __spriteIndex)
+	{
+		if (_sprite == null)
+		{
+			_sprite = _tileSprite.GetComponent<SpriteRenderer>();
+		}
+
+		if (_spriteSheet.Length > __spriteIndex)
+		{
+			if (_sprite != null)
+			{
+				if (__spriteIndex == 8)
+				{
+					_sprite.sortingOrder = 0;
+				}
+				else
+				{
+					_sprite.sortingOrder = 5;
+				}
+
+				_sprite.sprite = _spriteSheet[__spriteIndex];
+			}
+		}
+	}
 
 	public static Tile CreateTile(Color __pixelColor)
 	{
@@ -27,8 +59,11 @@ public class Tile : MonoBehaviour {
 
 	void Awake()
 	{
-		_tileSprite.localPosition = Vector3.down * 100.0f;
+		__origPos = _tileSprite.localPosition;
+		_tileSprite.localPosition = __origPos + _startOffset;
 	}
+
+	Vector2 _startOffset = -Vector2.up * 100.0f;
 
 	public void RotateTile(int __degrees)
 	{
@@ -53,8 +88,6 @@ public class Tile : MonoBehaviour {
 			__origDist = transform.position.magnitude;
 		}
 
-		Vector3 __startPos = _tileSprite.transform.localPosition;
-
 		float __time = -__origDist * 0.05f - Random.value * 0.1f;
 
 		while (__time < 1)
@@ -67,13 +100,13 @@ public class Tile : MonoBehaviour {
 			}
 
 			__time += Time.deltaTime;
-			_tileSprite.transform.localPosition = __startPos * (1-TileData.GetCurve().Evaluate(__time));
+			_tileSprite.transform.localPosition = __origPos + _startOffset * (1-TileData.GetCurve().Evaluate(__time));
 			yield return null;
 
 
 		}
 
-		_tileSprite.transform.localPosition = Vector2.zero;
+		_tileSprite.transform.localPosition = __origPos;
 	}
 	
 	public Coroutine MoveOut(Transform __player)
@@ -99,19 +132,17 @@ public class Tile : MonoBehaviour {
 			__dist = transform.position.magnitude;
 		}
 
-		Vector3 __startPos = _tileSprite.transform.localPosition;
-		
 		float __time = -__dist * 0.2f - Random.value * 0.3f;
 
 		while (__time < 1)
 		{
 
 			__time += Time.deltaTime;
-			_tileSprite.transform.localPosition = __startPos * (TileData.GetCurve().Evaluate(__time));
+			_tileSprite.transform.localPosition = __origPos + _startOffset * (TileData.GetCurve().Evaluate(__time));
 			yield return null;
 		}
 
-		_tileSprite.transform.localPosition = __startPos;
+		_tileSprite.transform.localPosition = __origPos + _startOffset;
 
 		_destroyObject = true;
 	}

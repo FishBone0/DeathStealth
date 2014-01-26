@@ -37,7 +37,7 @@ public class Level : MonoBehaviour
 		CameraMovement.SetPlayerTransform(__player.transform);
 
 		__startRoom.MoveToPlace(__player.transform);
-		yield return new WaitForSeconds(3.0f);
+		yield return new WaitForSeconds(1.0f);
 		__player.SetActive(true);
 	}
 

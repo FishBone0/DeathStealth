@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: b72b4c721c5cb1e40a6d2f30e3416dd6, type: 3}
   - {fileID: 2800000, guid: df3d11777de154349985239f5b1868f4, type: 3}
   - {fileID: 2800000, guid: 4f4ef4310099f8e4981a9c6a8d331366, type: 3}
+  _hallway: {fileID: 2800000, guid: cbdbf0ffd4981b24594de2188cc2a6a6, type: 3}
   _moveUpCurve:
     serializedVersion: 2
     m_Curve:
@@ -86,13 +87,14 @@ MonoBehaviour:
     m_PostInfinity: 2
   _wallUp: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
   _wallCorner: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
-  _vent: {fileID: 11400000, guid: f92d6daf32e66d041b59993ef93e5db2, type: 2}
   _floor: {fileID: 11400000, guid: f92d6daf32e66d041b59993ef93e5db2, type: 2}
   _floorWallLeft: {fileID: 11400000, guid: d23f64d6d56b5464cab9f113eccf253d, type: 2}
   _floorWallUp: {fileID: 11400000, guid: b0ea3ad99f76ae44a867040f0aaf4f23, type: 2}
   _floorWallRight: {fileID: 11400000, guid: 651d5d6c5c50f5a478960da2445923fe, type: 2}
   _floorWallDown: {fileID: 11400000, guid: 311984618f6e3c74a96bc13d1b1a4c87, type: 2}
   _floorWall: {fileID: 11400000, guid: b95b614f0622601458a9d1fbb99f4060, type: 2}
+  _grassTile: {fileID: 11400000, guid: 556c316d747f9fb479bf215306666de2, type: 2}
+  _house: {fileID: 11400000, guid: cea6cb574eb6d3243956c80088c0932a, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -31,9 +31,6 @@ public class TileData : MonoBehaviour
 	Tile _wallCorner;
 
 	[SerializeField]
-	Tile _vent;
-
-	[SerializeField]
 	Tile _floor;
 
 	[SerializeField]
@@ -47,8 +44,11 @@ public class TileData : MonoBehaviour
 	[SerializeField]
 	Tile _floorWall;
 
+	[SerializeField]
+	Tile _grassTile;
 
-
+	[SerializeField]
+	Tile _house;
 
 	public enum TileType
 	{
@@ -138,6 +138,17 @@ public class TileData : MonoBehaviour
 	{
 		if (_instance != null)
 		{
+			if (__type == TileType.House)
+			{
+				if (__south != TileType.House && __west != TileType.House)
+				{
+					return Instantiate(_instance._house) as Tile;
+				}
+				else
+				{
+					return null;
+				}
+			}
 			if (__type == TileType.Wall)
 			{
 				Tile __tile = null;
@@ -189,11 +200,73 @@ public class TileData : MonoBehaviour
 			}
 			if (__type == TileType.Vents)
 			{
-				return Instantiate(_instance._vent) as Tile;
+				//Add grass
+				Tile __tile = Instantiate(_instance._grassTile) as Tile;
+				if (__north == TileType.Vents)
+				{
+					if (__south == TileType.Vents)
+					{
+						__tile.ChangeSprite(9);
+					}
+					else if (__west == TileType.Vents)
+					{
+						__tile.ChangeSprite(5);
+					}
+					else if (__east == TileType.Vents)
+					{
+						__tile.ChangeSprite(4);
+					}
+					else
+					{
+						__tile.ChangeSprite(9);
+					}
+				}
+				else if (__south == TileType.Vents)
+				{
+					if (__west == TileType.Vents)
+					{
+						__tile.ChangeSprite(1);
+					}
+					else if (__east == TileType.Vents)
+					{
+						__tile.ChangeSprite(0);
+					}
+					else
+					{
+						__tile.ChangeSprite(9);
+					}
+				}
+				else if (__east == TileType.Vents)
+				{
+					if (__west == TileType.Vents)
+					{
+						__tile.ChangeSprite(10);
+					}
+					else
+					{
+						__tile.ChangeSprite(10);
+					}
+				}
+				else
+				{
+					__tile.ChangeSprite(10);
+				}
+				
+				return __tile;
 			}
 			if (__type != TileType.Wall && (__north == TileType.Vents || __east == TileType.Vents || __west == TileType.Vents || __south == TileType.Vents))
 			{
-				return Instantiate(_instance._floor) as Tile;
+				if (__north == TileType.Vents)
+				{
+					//Add grass
+					Tile __tile = Instantiate(_instance._grassTile) as Tile;
+					__tile.ChangeSprite(8);
+					return __tile;
+				}
+				else
+				{
+					return Instantiate(_instance._floor) as Tile;
+				}
 			}
 
 			if (__north == TileType.Wall)
