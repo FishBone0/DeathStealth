@@ -8,6 +8,14 @@ public class SamuraiScript : Damagable {
 	private string direction = "up";
 	private int moveSpeed = 3;
 	private GameObject target = null;
+	public Transform gib;
+	
+	void Explode() {
+		for (int y = 0; y < 10; y++) {
+			Instantiate(gib, new Vector3(transform.position.x + Random.value, transform.position.y +Random.value, 0), Quaternion.identity);
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -62,7 +70,7 @@ public class SamuraiScript : Damagable {
 			transform.eulerAngles = new Vector2(0, 0);
 		}
 
-		Vector2.MoveTowards (transform.position, target.transform.position, moveSpeed);
+		//Vector2.MoveTowards (transform.position, target.transform.position, moveSpeed);
 	}
 	
 	// Update is called once per frame
@@ -72,11 +80,17 @@ public class SamuraiScript : Damagable {
 			wasHit = false;
 			Invoke ("unHit", 0.3f);
 			Debug.Log ("ouch!");
+
+			Debug.Log(health.ToString());
 			//unHit();
 			//wasHit = false;
 		}
 		if(Input.GetKey(KeyCode.G)){
 			CheckInFront();
+		}
+		if (health <= 0) {
+			Explode ();
+			Destroy (gameObject);
 		}
 	}
 

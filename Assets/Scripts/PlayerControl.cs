@@ -16,7 +16,15 @@ public class PlayerControl : Damagable {
 	private float attackCooldown = 0.5f;
 	private bool blink = true;
 	private bool attacking = false;
-
+	public Transform gib;
+	
+	void Explode() {
+		for (int y = 0; y < 5; y++) {
+			for (int x = 0; x < 5; x++) {
+				Instantiate(gib, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+			}
+		}
+	}
 
 	void Awake()
 	{
@@ -187,6 +195,10 @@ public class PlayerControl : Damagable {
 			anim.SetBool("started_atk", true);
 			rigidbody2D.velocity = new Vector2(0, 0);
 			Invoke("CheckInFront", 0.2f);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Y)) {
+			Explode();
 		}
 
 		/*
