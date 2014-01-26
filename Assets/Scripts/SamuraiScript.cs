@@ -19,7 +19,8 @@ public class SamuraiScript : Damagable {
 	
 	void Explode() {
 		for (int y = 0; y < 10; y++) {
-			Instantiate(gib, new Vector3(transform.position.x + Random.value, transform.position.y +Random.value, 0), Quaternion.identity);
+			Transform __go = Instantiate(gib, new Vector3(transform.position.x + Random.value, transform.position.y +Random.value, 0), Quaternion.identity) as Transform;
+			__go.parent = transform.parent;
 		}
 	}
 

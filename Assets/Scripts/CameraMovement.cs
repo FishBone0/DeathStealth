@@ -38,5 +38,10 @@ public class CameraMovement : MonoBehaviour {
 		{
 			transform.position = new Vector3 ( transform.position.x - (transform.position.x - _playerTransform.position.x)/10, transform.position.y - (transform.position.y - _playerTransform.position.y)/10, -10);
 		}
+
+		if (Input.GetKeyDown(KeyCode.F2))
+		{
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 }
