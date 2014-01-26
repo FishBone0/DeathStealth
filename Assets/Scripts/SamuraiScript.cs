@@ -9,6 +9,7 @@ public class SamuraiScript : Damagable {
 	private int moveSpeed = 3;
 	private GameObject target = null;
 	public Transform gib;
+	private bool attacking = false;
 	
 	void Explode() {
 		for (int y = 0; y < 10; y++) {
@@ -20,6 +21,7 @@ public class SamuraiScript : Damagable {
 	void Start () {
 		anim = GetComponent<Animator> ();
 		//Debug.Log ("animator get");
+		Invoke ("attack", (float)( 5*Random.value));
 	}
 
 	void CheckInFront(){
@@ -63,6 +65,28 @@ public class SamuraiScript : Damagable {
 		Movement ();
 	}
 
+	void stopAttack(){
+		attacking = false;
+		anim.SetBool ("attacking", false);
+		Invoke ("attack", (float)( 5*Random.value));
+	}
+
+	void changeDirection(){
+		var rand = Random.value;
+		if (rand > 0.5) {
+			direction = "right";
+		} else {
+			direction = "left";
+		}
+	}
+
+	void attack(){
+		CheckInFront();
+		attacking = true;
+		anim.SetBool("attacking", true);
+		Invoke ("stopAttack", 0.5f);
+	}
+
 	void Movement(){
 		if (direction == "right") {
 			transform.eulerAngles = new Vector2(0, 180);
@@ -90,7 +114,7 @@ public class SamuraiScript : Damagable {
 			//wasHit = false;
 		}
 		if(Input.GetKey(KeyCode.G)){
-			CheckInFront();
+			attack ();
 		}
 		if (health <= 0) {
 			Explode ();
