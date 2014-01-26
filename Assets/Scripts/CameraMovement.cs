@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraMovement : MonoBehaviour {
 
 	static CameraMovement _instance;
-	Transform _playerTransform;
+	public Transform _playerTransform;
 
 	// Use this for initialization
 	void Awake ()
