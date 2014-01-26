@@ -174,6 +174,7 @@ public class Room : MonoBehaviour {
 			__room.MoveToPlace(PlayerControl.Instance.transform);
 
 			__room._entrenceRoom = this;
+			__room.gameObject.layer = 12;
 			_exitRooms.Add(__room);
 		}
 		if (__entrenceSouth.x != 0 || __entrenceSouth.y != 0)
