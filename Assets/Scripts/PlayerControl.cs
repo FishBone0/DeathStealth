@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : Damagable {
 
 	static PlayerControl _instance;
 
@@ -55,14 +55,25 @@ public class PlayerControl : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		if(wasHit == true){
+			anim.SetBool("hit", true);
+			wasHit = false;
+			Invoke ("unHit", 0.3f);
+			Debug.Log ("ouch!");
+			//unHit();
+			//wasHit = false;
+		}
+	}
 
+	void unHit(){
+		anim.SetBool("hit", false);
 	}
 
 	void FixedUpdate () 
     {
-		if (!attacking) {
+		if (!attacking && !wasHit) {
 			Movement ();
-		} else {
+		} else if(attacking){
 			anim.SetBool("started_atk", false);
 		}
     }
@@ -102,7 +113,7 @@ public class PlayerControl : MonoBehaviour {
 
 		foreach(Collider2D temp in array){
 			//Debug.Log ("Checking temp in array");
-		 	if(temp != null){
+			if(temp != null && temp.gameObject != gameObject){
 				//Debug.Log ("Temp not null");
 				Debug.Log (temp.gameObject.ToString());
 				Damagable dmgble = temp.gameObject.GetComponent<Damagable>();
@@ -123,7 +134,7 @@ public class PlayerControl : MonoBehaviour {
 			rigidbody2D.velocity = new Vector2(h, rigidbody2D.velocity.y);
 						
 			transform.eulerAngles = new Vector2(0, 0);
-			GetComponent<SpriteRenderer>().sprite = mySprite[2];
+
 			direction = "right";
 			moving = true;
 
@@ -131,7 +142,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			rigidbody2D.velocity = new Vector2(-h, rigidbody2D.velocity.y);
 			transform.eulerAngles = new Vector2(0, 180);
-			GetComponent<SpriteRenderer>().sprite = mySprite[2];
+
 			direction = "left";
 			moving = true;
 		} else {
@@ -142,13 +153,13 @@ public class PlayerControl : MonoBehaviour {
 		if(Input.GetKey( KeyCode.S )){
 			moving = true;
 			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, -h);
-			GetComponent<SpriteRenderer>().sprite = mySprite[0];
+
 			direction = "down";
 
 		} else if(Input.GetKey( KeyCode.W )){
 			moving = true;
 			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, h);
-			GetComponent<SpriteRenderer>().sprite = mySprite[1];
+
 			direction = "up";
 		} else {
 

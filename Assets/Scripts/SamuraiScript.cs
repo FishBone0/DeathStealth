@@ -2,13 +2,67 @@
 using System.Collections;
 
 public class SamuraiScript : Damagable {
-
+	private int damage = 10;
 	private Animator anim;
-
+	private Collider2D[] array = new Collider2D[10]; 
+	private string direction = "up";
+	private int moveSpeed = 3;
+	private GameObject target = null;
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
 		//Debug.Log ("animator get");
+	}
+
+	void CheckInFront(){
+
+		if (direction == "right") {
+			Debug.Log ("Checking hit right");
+			Physics2D.OverlapAreaNonAlloc(new Vector2 (transform.position.x, transform.position.y+1), new Vector2 (transform.position.x + 2, transform.position.y - 1), array);
+			
+		} else if (direction == "left") {
+			Debug.Log ("Checking hit left");
+			Physics2D.OverlapAreaNonAlloc (new Vector2 (transform.position.x, transform.position.y+1), new Vector2 (transform.position.x - 2, transform.position.y - 1), array);
+			
+		} else if (direction == "up") {
+			Debug.Log ("Checking hit up");
+			Physics2D.OverlapAreaNonAlloc (new Vector2 (transform.position.x-1, transform.position.y+1), new Vector2 (transform.position.x+1, transform.position.y + 2), array);
+			
+		} else if (direction == "down") {
+			Debug.Log ("Checking hit down");
+			Physics2D.OverlapAreaNonAlloc (new Vector2 (transform.position.x-1, transform.position.y-1), new Vector2 (transform.position.x+1, transform.position.y - 2), array);
+			
+		}
+
+		foreach(Collider2D temp in array){
+			//Debug.Log ("Checking temp in array");
+			if(temp != null && temp.gameObject != gameObject){
+				//Debug.Log ("Temp not null");
+				Debug.Log (temp.gameObject.ToString());
+				Damagable dmgble = temp.gameObject.GetComponent<Damagable>();
+				//Debug.Log (dmgble.GetType().ToString());
+				if(dmgble != null){
+					Debug.Log ("Damagable not null");
+					dmgble.Damage(damage);
+				}
+			}
+		}
+
+		array = new Collider2D[10];
+	}
+
+	void FixedUpdate(){
+		Movement ();
+	}
+
+	void Movement(){
+		if (direction == "right") {
+			transform.eulerAngles = new Vector2(0, 180);
+		} else if (direction == "left") {
+			transform.eulerAngles = new Vector2(0, 0);
+		}
+
+		Vector2.MoveTowards (transform.position, target.transform.position, moveSpeed);
 	}
 	
 	// Update is called once per frame
@@ -20,6 +74,9 @@ public class SamuraiScript : Damagable {
 			Debug.Log ("ouch!");
 			//unHit();
 			//wasHit = false;
+		}
+		if(Input.GetKey(KeyCode.G)){
+			CheckInFront();
 		}
 	}
 
