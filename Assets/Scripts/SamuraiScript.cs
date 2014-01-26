@@ -69,7 +69,11 @@ public class SamuraiScript : Damagable {
 		} else if (direction == "left") {
 			transform.eulerAngles = new Vector2(0, 0);
 		}
-
+		if (Mathf.Abs(rigidbody2D.velocity.x) > 0 || Mathf.Abs(rigidbody2D.velocity.y) > 0 ) {
+			anim.SetFloat ("speed", 2);
+		} else {
+			anim.SetFloat ("speed", 0);
+		}
 		//Vector2.MoveTowards (transform.position, target.transform.position, moveSpeed);
 	}
 	
