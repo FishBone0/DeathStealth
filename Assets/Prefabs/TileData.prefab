@@ -39,10 +39,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilePrefabs:
-  - tile: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
-    color: {r: 1, g: 1, b: 1, a: 0}
   - tile: {fileID: 11400000, guid: b95b614f0622601458a9d1fbb99f4060, type: 2}
-    color: {r: 0, g: 0, b: 0, a: 0}
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - tile: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
+    color: {r: 0, g: 0, b: 0, a: 1}
+  _roomDesigns:
+  - {fileID: 2800000, guid: 5b26ca30960145745b5dba3a41a2fd36, type: 3}
+  - {fileID: 2800000, guid: f712f34133d374258a9a0415d8f3969c, type: 3}
+  - {fileID: 2800000, guid: 33c82c8636b9d4a518460835294c007f, type: 3}
+  - {fileID: 2800000, guid: e755edd3eb08d44a599e8c9b2c7e4b86, type: 3}
+  _moveUpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .75
+      value: 1
+      inSlope: 1.37593949
+      outSlope: 1.37593949
+      tangentMode: 0
+    - time: .899999976
+      value: 1
+      inSlope: .539338887
+      outSlope: .539338887
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  _wallUp: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
+  _wallCorner: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
+  _vent: {fileID: 11400000, guid: f92d6daf32e66d041b59993ef93e5db2, type: 2}
+  _floor: {fileID: 11400000, guid: f92d6daf32e66d041b59993ef93e5db2, type: 2}
+  _floorWallLeft: {fileID: 11400000, guid: d23f64d6d56b5464cab9f113eccf253d, type: 2}
+  _floorWallUp: {fileID: 11400000, guid: b0ea3ad99f76ae44a867040f0aaf4f23, type: 2}
+  _floorWallRight: {fileID: 11400000, guid: 651d5d6c5c50f5a478960da2445923fe, type: 2}
+  _floorWallDown: {fileID: 11400000, guid: 311984618f6e3c74a96bc13d1b1a4c87, type: 2}
+  _floorWall: {fileID: 11400000, guid: b95b614f0622601458a9d1fbb99f4060, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

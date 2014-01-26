@@ -17,6 +17,10 @@ public class Level : MonoBehaviour
 	IEnumerator Start ()
     {
 		Room.CreateStartRoom(TileData.GetRoomDesign());
+
+		GameObject __player = Instantiate(_playerPrefab) as GameObject;
+		CameraMovement.SetPlayerTransform(__player.transform);
+
 		yield break;
 		//yield return CreateStartRoom();
 

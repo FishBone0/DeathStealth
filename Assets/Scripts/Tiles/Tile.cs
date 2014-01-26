@@ -9,17 +9,38 @@ public class Tile : MonoBehaviour {
 
 	public bool walkable;
 
+
+	public static Tile CreateTile(Color __pixelColor)
+	{
+		Tile __tilePrefab = TileData.GetTile(__pixelColor);
+
+		if (__tilePrefab != null)
+		{
+			Tile __tile = Instantiate(__tilePrefab) as Tile;
+			return __tile;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	void Start()
 	{
 		_tileSprite.localPosition = Vector3.down * 100.0f;
 		MoveToPlace(null);
 	}
 
+	public void RotateTile(int __degrees)
+	{
+		_tileSprite.rotation = Quaternion.Euler(0, 0, __degrees);
+	}
+
 	public Coroutine MoveToPlace(Transform __player = null)
 	{
 		return StartCoroutine(_MoveToPlace(__player));
 	}
-
+	
 	IEnumerator _MoveToPlace(Transform __player)
 	{
 		float __dist = 0;
