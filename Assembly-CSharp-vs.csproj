@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\Damagable.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\SamuraiScript.cs" />
      <Compile Include="Assets\Scripts\TestScript.cs" />
      <None Include="Assets\Pixelmaps\pixelmap_color_legend.txt" />
   </ItemGroup>
