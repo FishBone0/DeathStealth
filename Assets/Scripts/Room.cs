@@ -428,6 +428,19 @@ public class Room : MonoBehaviour {
 		return GetRoute(__from, __to);
 	}
 
+	Vector2 WorldPosFromIndex(int __index)
+	{
+		if (_width == 0)
+		{
+			return Vector2.zero;
+		}
+
+		int __x = __index % _width;
+		int __y = __index / _width;
+
+		return new Vector3(__x, __y) + transform.position;
+	}
+
 	List<int> GetRoute(int __from, int __to)
 	{
 		int __toX = __to % _height;
@@ -479,10 +492,8 @@ public class Room : MonoBehaviour {
 					continue;
 				}
 
-
 				if (!_tiles[__neighbour].walkable)
 				{
-					Debug.Log(__neighbour);
 					continue;
 				}
 
