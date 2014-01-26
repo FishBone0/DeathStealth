@@ -2,6 +2,7 @@ Pixelmap Color Code
 
 - - -
 
+Blue - Player Spawn (starting map only)
 Black - Walls
 Gray - Vents/Canals (for sneaking)
 White - Floor
