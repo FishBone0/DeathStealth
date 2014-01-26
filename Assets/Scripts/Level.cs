@@ -10,16 +10,28 @@ public class Level : MonoBehaviour
 	[SerializeField]
 	GameObject _playerPrefab;
 
-    List<Room> _activeRooms;
+    List<Room> _activeRooms = new List<Room>();
 
 	// Use this for initialization
 	IEnumerator Start ()
     {
-		Room.CreateStartRoom(TileData.GetStartRoomDesign());
+		Room __startRoom = Room.CreateStartRoom(TileData.GetStartRoomDesign());
+		_activeRooms.Add(__startRoom);
 
-		//yield return new WaitForSeconds(3.0f);
+		CameraMovement.Instance.transform.position = new Vector3(startPosition.x, startPosition.y, CameraMovement.Instance.transform.position.z);
+
 		GameObject __player = Instantiate(_playerPrefab, startPosition, Quaternion.identity) as GameObject;
 		CameraMovement.SetPlayerTransform(__player.transform);
+
+		__player.SetActive(false);
+
+		__startRoom.MoveToPlace(__player.transform);
+
+		yield return new WaitForSeconds(3.0f);
+		__player.SetActive(true);
+		
+
+
 
 		yield break;
 		//yield return CreateStartRoom();

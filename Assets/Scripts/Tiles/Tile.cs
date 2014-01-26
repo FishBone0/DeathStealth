@@ -25,10 +25,9 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	void Start()
+	void Awake()
 	{
 		_tileSprite.localPosition = Vector3.down * 100.0f;
-		MoveToPlace(null);
 	}
 
 	public void RotateTile(int __degrees)
@@ -36,7 +35,7 @@ public class Tile : MonoBehaviour {
 		_tileSprite.rotation = Quaternion.Euler(0, 0, __degrees);
 	}
 
-	public Coroutine MoveToPlace(Transform __player = null)
+	public Coroutine MoveToPlace(Transform __player)
 	{
 		return StartCoroutine(_MoveToPlace(__player));
 	}
@@ -44,6 +43,7 @@ public class Tile : MonoBehaviour {
 	IEnumerator _MoveToPlace(Transform __player)
 	{
 		float __dist = 0;
+
 		if (__player != null)
 		{
 			__dist = (__player.position - transform.position).magnitude;
@@ -54,7 +54,6 @@ public class Tile : MonoBehaviour {
 		}
 
 		Vector3 __startPos = _tileSprite.transform.localPosition;
-
 
 		float __time = -__dist * 0.2f - Random.value * 0.3f;
 

@@ -16,6 +16,9 @@ public class TileData : MonoBehaviour
 	Texture2D[] _roomDesigns;
 
 	[SerializeField]
+	Texture2D _hallway;
+
+	[SerializeField]
 	AnimationCurve _moveUpCurve;
 
 	Dictionary<Color, Tile> _tileDict = new Dictionary<Color, Tile>();
@@ -44,6 +47,9 @@ public class TileData : MonoBehaviour
 	[SerializeField]
 	Tile _floorWall;
 
+
+
+
 	public enum TileType
 	{
 		None,
@@ -71,7 +77,7 @@ public class TileData : MonoBehaviour
 			_tileType.Add(Color.black, TileType.Wall);
 			_tileType.Add(Color.white, TileType.Floor);
 			_tileType.Add(Color.red, TileType.Enemy);
-			_tileType.Add(Color.yellow, TileType.Entrance);
+			_tileType.Add(new Color32(255, 242, 0, 255), TileType.Entrance);
 			_tileType.Add(new Color32(128,64,0,255), TileType.Box);
 			_tileType.Add(new Color32(127,127,127,255), TileType.Vents);
 			_tileType.Add(new Color32(0,162,232,255), TileType.Spawn);
@@ -105,6 +111,16 @@ public class TileData : MonoBehaviour
 		return null;
 	}
 
+	public static Texture2D GetHallway()
+	{
+		if (_instance != null)
+		{
+			return _instance._hallway;
+		}
+
+		return null;
+	}
+
 	public static TileType GetTileType(Color __color)
 	{
 		if (_instance != null)
@@ -118,7 +134,7 @@ public class TileData : MonoBehaviour
 		return TileType.None;
 	}
 
-	public static Tile GetTile(TileType __type, TileType __north, TileType __east, TileType __south, TileType __west, TileType __northNorth)
+	public static Tile GetTile(TileType __type, TileType __north, TileType __east, TileType __south, TileType __west, TileType __northNorth, TileType __northWest, TileType __northEast)
 	{
 		if (_instance != null)
 		{
@@ -175,6 +191,10 @@ public class TileData : MonoBehaviour
 			{
 				return Instantiate(_instance._vent) as Tile;
 			}
+			if (__type != TileType.Wall && (__north == TileType.Vents || __east == TileType.Vents || __west == TileType.Vents || __south == TileType.Vents))
+			{
+				return Instantiate(_instance._floor) as Tile;
+			}
 
 			if (__north == TileType.Wall)
 			{
@@ -192,10 +212,18 @@ public class TileData : MonoBehaviour
 			{
 				return Instantiate(_instance._floorWallUp) as Tile;
 			}
-//			if (__south == TileType.Wall)
-//			{
-//				return Instantiate(_instance._floorWallDown) as Tile;
-//			}
+			if (__northEast == TileType.Wall)
+			{
+				return Instantiate(_instance._floorWallLeft) as Tile;
+			}
+			if (__northWest == TileType.Wall)
+			{
+				return Instantiate(_instance._floorWallRight) as Tile;
+			}
+			if (__south == TileType.Wall)
+			{
+				return Instantiate(_instance._floorWallDown) as Tile;
+			}
 			
 			//Return default-tile if none mathces
 			return Instantiate(_instance._floor) as Tile;

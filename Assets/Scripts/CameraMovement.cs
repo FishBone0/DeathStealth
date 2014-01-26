@@ -6,6 +6,11 @@ public class CameraMovement : MonoBehaviour {
 	static CameraMovement _instance;
 	public Transform _playerTransform;
 
+	public static CameraMovement Instance
+	{
+		get {return _instance;}
+	}
+
 	// Use this for initialization
 	void Awake ()
 	{

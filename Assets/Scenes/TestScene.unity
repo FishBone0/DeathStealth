@@ -109,6 +109,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: af54594c45c6e224cb9d7bc248622ab9, type: 2}
+      propertyPath: _hallway
+      value: 
+      objectReference: {fileID: 2800000, guid: cbdbf0ffd4981b24594de2188cc2a6a6, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af54594c45c6e224cb9d7bc248622ab9, type: 2}
   m_RootGameObject: {fileID: 1772088731}
@@ -290,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a46267b03c443f29ba350939b1a082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 0}
 --- !u!1 &1772088731
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +344,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: b72b4c721c5cb1e40a6d2f30e3416dd6, type: 3}
   - {fileID: 2800000, guid: df3d11777de154349985239f5b1868f4, type: 3}
   - {fileID: 2800000, guid: 4f4ef4310099f8e4981a9c6a8d331366, type: 3}
+  _hallway: {fileID: 2800000, guid: cbdbf0ffd4981b24594de2188cc2a6a6, type: 3}
   _moveUpCurve:
     serializedVersion: 2
     m_Curve:
@@ -379,6 +385,32 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: af54594c45c6e224cb9d7bc248622ab9, type: 2}
   m_PrefabInternal: {fileID: 76375302}
   m_GameObject: {fileID: 1772088731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!1 &1976896845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1976896846}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1976896846
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1976896845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
