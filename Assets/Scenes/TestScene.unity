@@ -113,6 +113,10 @@ Prefab:
       propertyPath: _hallway
       value: 
       objectReference: {fileID: 2800000, guid: cbdbf0ffd4981b24594de2188cc2a6a6, type: 3}
+    - target: {fileID: 11400000, guid: af54594c45c6e224cb9d7bc248622ab9, type: 2}
+      propertyPath: _startRoom
+      value: 
+      objectReference: {fileID: 2800000, guid: 1f6cb8ea081e24d49afec47123073408, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af54594c45c6e224cb9d7bc248622ab9, type: 2}
   m_RootGameObject: {fileID: 1772088731}

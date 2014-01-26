@@ -11,6 +11,8 @@ public class Room : MonoBehaviour {
 	Vector2 __entrenceSouth;
 	Vector2 __entrenceEast;
 
+	Room _entrenceRoom;
+
 	public static Room CreateStartRoom(Texture2D __roomDesign)
 	{
 		GameObject __go = new GameObject("StartRoom");
@@ -22,6 +24,7 @@ public class Room : MonoBehaviour {
 		TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, Random.Range (0, 8));
 		__room.CreateTiles(__height, __width, __tileTypes);
 		__room.CreateEntrences();
+		__room._entrenceRoom = __room;
 
 		return __room;
 	}
@@ -54,7 +57,7 @@ public class Room : MonoBehaviour {
 			for (int __y = 0; __y < __height; __y++) {
 				TileData.TileType __type = __tileTypes [GetIndex (__x, __y, __width, __height)];
 				if (__type == TileData.TileType.Spawn) {
-					Level.startPosition = new Vector2 (__x - __width / 2, __y - __height / 2);
+					Level.startPosition = new Vector2 (__x, __y);
 				}
 				TileData.TileType __north = TileData.TileType.None;
 				TileData.TileType __east = TileData.TileType.None;
@@ -89,7 +92,7 @@ public class Room : MonoBehaviour {
 				Tile __tile = TileData.GetTile (__type, __north, __east, __south, __west, __northNorth, __northEast, __northWest);
 				if (__tile != null) {
 					__tile.transform.parent = transform;
-					__tile.transform.localPosition = new Vector3 (__x - __width / 2, __y - __height / 2);
+					__tile.transform.localPosition = new Vector3 (__x, __y);
 					_tiles.Add (__tile);
 				}
 				if (__type == TileData.TileType.Entrance) 
@@ -98,25 +101,36 @@ public class Room : MonoBehaviour {
 					{
 						if (__x == 0)
 						{
-							__entrenceWest = new Vector2 (__x - __width / 2, __y - __height / 2);
+							__entrenceWest = new Vector2 (__x, __y);
 						}
 						else if (__x == __width - 1)
 						{
-							__entrenceEast = new Vector2 (__x - __width / 2, __y - __height / 2);
+							__entrenceEast = new Vector2 (__x, __y);
 						}
 						else if (__y == 0)
 						{
-							__entrenceSouth = new Vector2 (__x - __width / 2, __y - __height / 2);
+							__entrenceSouth = new Vector2 (__x, __y);
 						}
 						else if (__y == __height - 1)
 						{
-							__entrenceNorth = new Vector2 (__x - __width / 2, __y - __height / 2);
+							__entrenceNorth = new Vector2 (__x, __y);
 						}
 					}
 				}
 			}
 		}
 	}
+
+	public enum Direction
+	{
+		North,
+		South,
+		East,
+		West
+	}
+
+	Direction ExitDir;
+	Vector2 ExitPos;
 
 	void CreateEntrences()
 	{
@@ -132,8 +146,22 @@ public class Room : MonoBehaviour {
 			TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, 6);
 			__room.CreateTiles(__height, __width, __tileTypes);
 
-			__room.transform.position = new Vector3(__entrenceNorth.x + 1, __entrenceNorth.y + 2 + __width / 2); 
+			__room.transform.position = transform.position + new Vector3(__entrenceNorth.x - 1, __entrenceNorth.y + 1); 
 			__room.MoveToPlace();
+
+			Vector2 __midPos = new Vector2(-0.5f + __width / 2.0f, -0.5f + __height / 2.0f);
+			BoxCollider2D __trigger = __room.gameObject.AddComponent<BoxCollider2D>();
+			__trigger.center = __midPos;
+			__trigger.size = new Vector2(3, 1);
+			__trigger.isTrigger = true;
+
+			__room.ExitDir = Direction.North;
+			__room.ExitPos = new Vector2(1, __height - 1);
+
+			__room.MoveToPlace(PlayerControl.Instance.transform);
+
+			__room._entrenceRoom = this;
+			_exitRooms.Add(__room);
 		}
 		if (__entrenceSouth.x != 0 || __entrenceSouth.y != 0)
 		{
@@ -147,8 +175,22 @@ public class Room : MonoBehaviour {
 			TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, 6);
 			__room.CreateTiles(__height, __width, __tileTypes);
 			
-			__room.transform.position = new Vector3(__entrenceSouth.x + 1, __entrenceSouth.y - 1 - __width / 2); 
+			__room.transform.position = transform.position + new Vector3(__entrenceSouth.x - 1, __entrenceSouth.y - __height); 
 			__room.MoveToPlace();
+
+			Vector2 __midPos = new Vector2(-0.5f + __width / 2.0f, -0.5f + __height / 2.0f);
+			BoxCollider2D __trigger = __room.gameObject.AddComponent<BoxCollider2D>();
+			__trigger.center = __midPos;
+			__trigger.size = new Vector2(3, 1);
+			__trigger.isTrigger = true;
+			
+			__room.ExitDir = Direction.South;
+			__room.ExitPos = new Vector2(1, 0);
+
+			__room.MoveToPlace(PlayerControl.Instance.transform);
+
+			__room._entrenceRoom = this;
+			_exitRooms.Add(__room);
 		}
 		if (__entrenceWest.x != 0 || __entrenceWest.y != 0)
 		{
@@ -162,8 +204,23 @@ public class Room : MonoBehaviour {
 			TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, 0);
 			__room.CreateTiles(__height, __width, __tileTypes);
 			
-			__room.transform.position = new Vector3(__entrenceWest.x - __width / 2, __entrenceWest.y + 1); 
+			__room.transform.position = transform.position + new Vector3(__entrenceWest.x - __width, __entrenceWest.y - 1); 
 			__room.MoveToPlace();
+
+			Vector2 __midPos = new Vector2(-0.5f + __width / 2.0f, -0.5f + __height / 2.0f);
+			BoxCollider2D __trigger = __room.gameObject.AddComponent<BoxCollider2D>();
+			__trigger.center = __midPos;
+			__trigger.size = new Vector2(1, 3);
+			__trigger.isTrigger = true;
+			
+			__room.ExitDir = Direction.West;
+			__room.ExitPos = new Vector2(0, 1);
+
+			__room.MoveToPlace(PlayerControl.Instance.transform);
+
+			__room._entrenceRoom = this;
+			_exitRooms.Add(__room);
+
 		}
 		if (__entrenceEast.x != 0 || __entrenceEast.y != 0)
 		{
@@ -177,9 +234,29 @@ public class Room : MonoBehaviour {
 			TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, 0);
 			__room.CreateTiles(__height, __width, __tileTypes);
 			
-			__room.transform.position = new Vector3(__entrenceEast.x + 1 +  __width / 2, __entrenceEast.y + 1); 
+			__room.transform.position = transform.position + new Vector3(__entrenceEast.x + 1, __entrenceEast.y - 1); 
 			__room.MoveToPlace();
+
+			Vector2 __midPos = new Vector2(-0.5f + __width / 2.0f, -0.5f + __height / 2.0f);
+			BoxCollider2D __trigger = __room.gameObject.AddComponent<BoxCollider2D>();
+			__trigger.center = __midPos;
+			__trigger.size = new Vector2(1, 3);
+			__trigger.isTrigger = true;
+			
+			__room.ExitDir = Direction.East;
+			__room.ExitPos = new Vector2(__width - 1, 1);
+
+			__room.MoveToPlace(PlayerControl.Instance.transform);
+
+			__room._entrenceRoom = this;
+			_exitRooms.Add(__room);
+
 		}
+
+		__entrenceNorth = Vector2.zero;
+		__entrenceSouth = Vector2.zero;
+		__entrenceEast = Vector2.zero;
+		__entrenceWest = Vector2.zero;
 	}
 
 	static int GetIndex(int __x, int __y, int __width, int __height, int __rotation = 0)
@@ -216,4 +293,123 @@ public class Room : MonoBehaviour {
 			__tile.MoveToPlace(__playerTransform);
 		}
 	}
+
+	public Coroutine MoveOut(Transform __playerTransform = null)
+	{
+		return StartCoroutine(_MoveOut(__playerTransform));
+	}
+
+	IEnumerator _MoveOut(Transform __playerTransform = null)
+	{
+		foreach(Tile __tile in _tiles)
+		{
+			__tile.MoveOut(__playerTransform);
+		}
+
+		yield return null;
+
+		bool __isLooping = true;
+
+		while (true)
+		{
+			bool __foundLiveTile = false;
+
+			foreach (Tile __tile in _tiles)
+			{
+				if (__tile != null)
+				{
+					__foundLiveTile = true;
+					break;
+				}
+			}
+
+			if (!__foundLiveTile)
+			{
+				break;
+			}
+
+			yield return null;
+		}
+
+		if (_entrenceRoom != null)
+		{
+			_entrenceRoom.MoveOut(PlayerControl.Instance.transform);
+		}
+
+		Destroy(gameObject);
+	}
+
+
+	void OnTriggerEnter2D(Collider2D __other)
+	{
+		if (!_hasCreatedExitRoom)
+		{
+			Room __room = CreateRoom((Vector2)transform.position + ExitPos, ExitDir);
+			__room._entrenceRoom = this;
+
+			__room.MoveToPlace(PlayerControl.Instance.transform);
+
+			_hasCreatedExitRoom = true;
+
+			if (_entrenceRoom != null)
+			{
+				_entrenceRoom.RemoveExits(this);
+				_entrenceRoom.MoveOut(PlayerControl.Instance.transform);
+			}
+		}
+	}
+
+	void RemoveExits(Room __except)
+	{
+		for (int i=0;i<_exitRooms.Count;i++)
+		{
+			if (_exitRooms[i] != __except)
+			{
+				_exitRooms[i].MoveOut();
+			}
+		}
+	}
+
+	List<Room> _exitRooms = new List<Room>();
+	bool _hasCreatedExitRoom;
+
+
+	public static Room CreateRoom(Vector2 __entrencePos, Direction __entrenceDirection)
+	{
+		Texture2D __roomDesign = TileData.GetRoomDesign();
+
+		GameObject __go = new GameObject("StartRoom");
+		Room __room = __go.AddComponent<Room>();
+		
+		int __height = __roomDesign.height;
+		int __width = __roomDesign.width;
+		
+		TileData.TileType[] __tileTypes = CreateTileArray (__roomDesign, __room, ref __height, ref __width, Random.Range (0, 8));
+		__room.CreateTiles(__height, __width, __tileTypes);
+
+		switch(__entrenceDirection)
+		{
+		case Direction.North:
+			__room.transform.position =  __entrencePos - __room.__entrenceSouth + Vector2.up;
+			__room.__entrenceSouth = Vector2.zero;
+			break;
+		case Direction.South:
+			__room.transform.position =  __entrencePos - __room.__entrenceNorth - Vector2.up;
+			__room.__entrenceNorth = Vector2.zero;
+			break;
+		case Direction.East:
+			__room.transform.position =  __entrencePos - __room.__entrenceWest + Vector2.right;
+			__room.__entrenceWest = Vector2.zero;
+			break;
+		case Direction.West:
+			__room.transform.position =  __entrencePos - __room.__entrenceEast - Vector2.right;
+			__room.__entrenceEast = Vector2.zero;
+			break;
+		}
+
+		__room.CreateEntrences();
+		
+		return __room;
+	}
+
 }

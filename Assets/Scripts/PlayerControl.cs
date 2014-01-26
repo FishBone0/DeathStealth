@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerControl : Damagable {
 
+	static PlayerControl _instance;
+
 	Collider2D[] array = new Collider2D[10];
 	public Camera myCamera;
 	public float h = 2;
@@ -14,6 +16,24 @@ public class PlayerControl : Damagable {
 	private float attackCooldown = 0.5f;
 	private bool blink = true;
 	private bool attacking = false;
+
+
+	void Awake()
+	{
+		if (_instance != null)
+		{
+			Destroy(gameObject);
+		}
+		else 
+		{
+			_instance = this;
+		}
+	}
+
+	public static PlayerControl Instance
+	{
+		get {return _instance;}
+	}
 
 	void Start(){
 		anim = GetComponent<Animator> ();
