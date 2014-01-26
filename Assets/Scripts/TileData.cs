@@ -162,22 +162,22 @@ public class TileData : MonoBehaviour
 			{
 				return Instantiate(_instance._floorWall) as Tile;
 			}
-			else if (__west == TileType.Wall)
+			if (__west == TileType.Wall)
 			{
 				return Instantiate(_instance._floorWallLeft) as Tile;
 			}
-			else if (__east == TileType.Wall)
+			if (__east == TileType.Wall)
 			{
 				return Instantiate(_instance._floorWallRight) as Tile;
 			}
-			else if (__northNorth == TileType.Wall)
+			if (__northNorth == TileType.Wall)
 			{
 				return Instantiate(_instance._floorWallUp) as Tile;
 			}
-			else if (__south == TileType.Wall)
-			{
-				return Instantiate(_instance._floorWallDown) as Tile;
-			}
+//			if (__south == TileType.Wall)
+//			{
+//				return Instantiate(_instance._floorWallDown) as Tile;
+//			}
 			
 			//Return default-tile if none mathces
 			return Instantiate(_instance._floor) as Tile;

@@ -60,6 +60,10 @@ public class Room : MonoBehaviour {
 				{
 					__north = __tileTypes[GetIndex(__x, __y + 1, __width, __height)];
 				}
+				if (__y + 2 < __height)
+				{
+					__northNorth = __tileTypes[GetIndex(__x, __y + 2, __width, __height)];
+				}
 				if (__x - 1 >= 0)
 				{
 					__west = __tileTypes[GetIndex(__x - 1, __y, __width, __height)];
