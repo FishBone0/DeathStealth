@@ -26,6 +26,9 @@ public class Room : MonoBehaviour {
 		__room.CreateEntrences();
 		__room._entrenceRoom = __room;
 
+		__room._height = __height;
+		__room._width = __width;
+
 		return __room;
 	}
 
@@ -374,7 +377,8 @@ public class Room : MonoBehaviour {
 
 	List<Room> _exitRooms = new List<Room>();
 	bool _hasCreatedExitRoom;
-
+	int _width;
+	int _height;
 
 	public static Room CreateRoom(Vector2 __entrencePos, Direction __entrenceDirection)
 	{
@@ -410,8 +414,139 @@ public class Room : MonoBehaviour {
 		}
 
 		__room.CreateEntrences();
-		
+		__room._height = __height;
+		__room._width = __width;
+
 		return __room;
 	}
 
+	List<int> GetRoute(int __fromX, int __fromY, int __toX, int __toY)
+	{
+		int __from = __fromX + __fromY * _width;
+		int __to = __toX + __toY * _width;
+
+		return GetRoute(__from, __to);
+	}
+
+	List<int> GetRoute(int __from, int __to)
+	{
+		int __toX = __to % _height;
+		int __toY = __to / _height;
+		
+		int __size = _width * _height;
+		List<int> closedSet = new List<int>();
+		List<int> openSet = new List<int>();
+
+		int[] _cameFrom = new int[__size];
+		int[] g_score = new int[__size];
+		int[] f_score = new int[__size];
+	
+		for (int i=0;i<__size;i++)
+		{
+			_cameFrom[i] = -1;
+		}
+
+		openSet.Add(__from);
+
+
+		while(openSet.Count > 0)
+		{
+			int __lowest = int.MaxValue;
+			int __current = 0;
+
+			foreach(int __index in openSet)
+			{
+				int __score = g_score[__index] + f_score[__index];
+				if (__score < __lowest)
+				{
+					__lowest = __score;
+					__current = __index;
+				}
+			}
+
+			if (__current == __to)
+			{
+				return ReconstructPath(_cameFrom, __current); 
+			}
+
+			openSet.Remove(__current);
+			closedSet.Add(__current);
+
+			foreach (int __neighbour in GetNeighbours(__current))
+			{
+				if (closedSet.Contains(__neighbour))
+				{
+					continue;
+				}
+
+
+				if (!_tiles[__neighbour].walkable)
+				{
+					Debug.Log(__neighbour);
+					continue;
+				}
+
+				if (!openSet.Contains(__neighbour) || (g_score[__current] + 1) < g_score[__neighbour])
+				{
+					_cameFrom[__neighbour] = __current;
+					g_score[__neighbour] = g_score[__current] + 1;
+
+					if (!openSet.Contains(__neighbour))
+					{
+						int __x = __neighbour % _height;
+						int __y = __neighbour / _height;
+						f_score[__neighbour] = Mathf.Abs(__x - __toX) + Mathf.Abs(__y - __toY);
+
+						openSet.Add(__neighbour);
+					}
+				}
+			}
+
+
+		}
+		return null;
+	}
+
+	List<int> ReconstructPath(int[] __cameFromArray, int __goalNode)
+	{
+		List<int> __route = new List<int>();
+		int __index = __goalNode;
+
+		while (__index >= 0)
+		{
+			__route.Add(__index);
+			__index = __cameFromArray[__index];
+		}
+
+		__route.Reverse();
+		return __route;
+	}
+
+						
+	List<int> GetNeighbours(int __index)
+	{
+		int __currentX = __index % _height;
+		int __currentY = __index / _height;
+		Debug.Log(__currentX + ", " + __currentY);
+		List<int> __neighbours = new List<int>();
+
+		if (__currentX - 1 >= 0 && __currentX - 1 < _width)
+		{
+			__neighbours.Add((__currentX - 1) + __currentY * _width);
+		}
+		if (__currentX + 1 >= 0 && __currentX + 1 < _width)
+		{
+			__neighbours.Add((__currentX + 1) + __currentY * _width);
+		}
+		if (__currentY - 1 >= 0 && __currentY - 1 < _height)
+		{
+			__neighbours.Add((__currentX) + (__currentY - 1) * _width);
+		}
+		if (__currentY + 1 >= 0 && __currentY + 1 < _height)
+		{
+			__neighbours.Add((__currentX) + (__currentY + 1) * _width);
+		}
+		
+		return __neighbours;
+	}
 }
