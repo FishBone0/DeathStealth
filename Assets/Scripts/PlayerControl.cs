@@ -66,11 +66,13 @@ public class PlayerControl : Damagable {
 
 		foreach(Collider2D temp in array){
 			Debug.Log ("Checking temp in array");
+		 	
 			Damagable dmgble = temp.GetComponent<Damagable>();
 			if(dmgble != null){
 				Debug.Log ("Damagable not null");
 				dmgble.Damage(10);
 			}
+
 		}
 	}
 
