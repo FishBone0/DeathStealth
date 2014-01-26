@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : Damagable {
+public class PlayerControl : MonoBehaviour {
 
 	static PlayerControl _instance;
 
@@ -79,7 +79,8 @@ public class PlayerControl : Damagable {
 		Debug.Log ("Checking hit");
 		if (direction == "right") {
 			Debug.Log ("Checking hit right");
-			Physics2D.OverlapAreaNonAlloc(new Vector2 (transform.position.x, transform.position.y), new Vector2 (transform.position.x + 1, transform.position.y - 1), array);
+			var howMany = Physics2D.OverlapAreaNonAlloc(new Vector2 (transform.position.x, transform.position.y), new Vector2 (transform.position.x + 1, transform.position.y - 1), array);
+			Debug.Log (howMany.ToString());
 			//var array = Physics2D.OverlapAreaAll(new Vector2 (transform.position.x, transform.position.y), new Vector2 (transform.position.x + 1, transform.position.y - 1));
 
 		} else if (direction == "left") {
@@ -100,18 +101,19 @@ public class PlayerControl : Damagable {
 		}
 
 		foreach(Collider2D temp in array){
-			Debug.Log ("Checking temp in array");
-		 	
-			if (temp != null)
-			{
-				Damagable dmgble = temp.GetComponent<Damagable>();
-				if(dmgble != null)
-				{
+			//Debug.Log ("Checking temp in array");
+		 	if(temp != null){
+				//Debug.Log ("Temp not null");
+				Debug.Log (temp.gameObject.ToString());
+				Damagable dmgble = temp.gameObject.GetComponent<Damagable>();
+				//Debug.Log (dmgble.GetType().ToString());
+				if(dmgble != null){
 					Debug.Log ("Damagable not null");
 					dmgble.Damage(10);
 				}
 			}
 		}
+		array = new Collider2D[10];
 	}
 
 	void Movement () {
@@ -167,7 +169,7 @@ public class PlayerControl : Damagable {
 		} else {
 			anim.SetFloat ("Speed", Mathf.Abs (0));
 		}
-		if (Input.GetKeyDown (KeyCode.Space) && !attacking) {
+		if (Input.GetKey (KeyCode.Space) && !attacking) {
 			attacking = true;
 			Invoke("EndAttack", attackCooldown);
 			anim.SetBool("attack_right", true);

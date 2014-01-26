@@ -8,14 +8,16 @@ public class SamuraiScript : Damagable {
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
+		//Debug.Log ("animator get");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(wasHit == true){
 			anim.SetBool("hit", true);
-			Invoke ("unHit", 0.3f);
 			wasHit = false;
+			Invoke ("unHit", 0.3f);
+			Debug.Log ("ouch!");
 			//unHit();
 			//wasHit = false;
 		}
