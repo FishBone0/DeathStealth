@@ -197,8 +197,9 @@ public class PlayerControl : Damagable {
 			Invoke("CheckInFront", 0.2f);
 		}
 
-		if (Input.GetKeyDown (KeyCode.Y)) {
+		if (health <= 0) {
 			Explode();
+			Destroy(gameObject);
 		}
 
 		/*

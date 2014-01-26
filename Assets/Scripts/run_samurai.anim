@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ninja_hi
+  m_Name: run_samurai
   serializedVersion: 4
   m_AnimationType: 2
   m_Compressed: 0
@@ -18,12 +18,22 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 6185f84d64d6b46f687601c724c77e6a, type: 3}
+      value: {fileID: 21300000, guid: 1e582bd73de9444bebff7489090295d0, type: 3}
+    - time: .0333333351
+      value: {fileID: 21300000, guid: 0e3c90fb0fd2a46ed9fe9550565ef216, type: 3}
+    - time: .0666666701
+      value: {fileID: 21300000, guid: f211fe90822914b48b649b7226e6852d, type: 3}
+    - time: .100000001
+      value: {fileID: 21300000, guid: 13182b9c220cb4868905014010f49cab, type: 3}
+    - time: .13333334
+      value: {fileID: 21300000, guid: 65fae38507f1a4bf09e677349a8838e3, type: 3}
+    - time: .166666672
+      value: {fileID: 21300000, guid: be39f051e057c470f945576d382db55e, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 60
+  m_SampleRate: 30
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -31,7 +41,7 @@ AnimationClip:
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: .0166666675
+    m_StopTime: .200000003
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

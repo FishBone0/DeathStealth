@@ -15,6 +15,8 @@ public class SamuraiScript : Damagable {
 
 
 
+	private bool attacking = false;
+	
 	void Explode() {
 		for (int y = 0; y < 10; y++) {
 			Instantiate(gib, new Vector3(transform.position.x + Random.value, transform.position.y +Random.value, 0), Quaternion.identity);
@@ -25,6 +27,7 @@ public class SamuraiScript : Damagable {
 	void Start () {
 		anim = GetComponent<Animator> ();
 		//Debug.Log ("animator get");
+		Invoke ("attack", (float)( 5*Random.value));
 	}
 
 	void CheckInFront(){
@@ -68,13 +71,39 @@ public class SamuraiScript : Damagable {
 		Movement ();
 	}
 
+	void stopAttack(){
+		attacking = false;
+		anim.SetBool ("attacking", false);
+		Invoke ("attack", (float)( 5*Random.value));
+	}
+
+	void changeDirection(){
+		var rand = Random.value;
+		if (rand > 0.5) {
+			direction = "right";
+		} else {
+			direction = "left";
+		}
+	}
+
+	void attack(){
+		CheckInFront();
+		attacking = true;
+		anim.SetBool("attacking", true);
+		Invoke ("stopAttack", 0.5f);
+	}
+
 	void Movement(){
 		if (direction == "right") {
 			transform.eulerAngles = new Vector2(0, 180);
 		} else if (direction == "left") {
 			transform.eulerAngles = new Vector2(0, 0);
 		}
-
+		if (Mathf.Abs(rigidbody2D.velocity.x) > 0 || Mathf.Abs(rigidbody2D.velocity.y) > 0 ) {
+			anim.SetFloat ("speed", 2);
+		} else {
+			anim.SetFloat ("speed", 0);
+		}
 		//Vector2.MoveTowards (transform.position, target.transform.position, moveSpeed);
 	}
 	
@@ -91,7 +120,7 @@ public class SamuraiScript : Damagable {
 			//wasHit = false;
 		}
 		if(Input.GetKey(KeyCode.G)){
-			CheckInFront();
+			attack ();
 		}
 		if (health <= 0) {
 			Explode ();
