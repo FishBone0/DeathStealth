@@ -43,11 +43,22 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 0}
   - tile: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
     color: {r: 0, g: 0, b: 0, a: 1}
+  _startRoom: {fileID: 2800000, guid: 1f6cb8ea081e24d49afec47123073408, type: 3}
   _roomDesigns:
   - {fileID: 2800000, guid: 5b26ca30960145745b5dba3a41a2fd36, type: 3}
   - {fileID: 2800000, guid: f712f34133d374258a9a0415d8f3969c, type: 3}
   - {fileID: 2800000, guid: 33c82c8636b9d4a518460835294c007f, type: 3}
   - {fileID: 2800000, guid: e755edd3eb08d44a599e8c9b2c7e4b86, type: 3}
+  - {fileID: 2800000, guid: 1a77e37777dbd2141b527967291133ba, type: 3}
+  - {fileID: 2800000, guid: 307cb09841626c24bae010114b1b9730, type: 3}
+  - {fileID: 2800000, guid: 327ae27f5c1d3d94b823c621ff34bf4b, type: 3}
+  - {fileID: 2800000, guid: 33a8f4ee0e5120a4182d9baeaa08c9e1, type: 3}
+  - {fileID: 2800000, guid: 9c7b0116dd5729240a928689a68081d7, type: 3}
+  - {fileID: 2800000, guid: 9f54a21d9d32c0c4ba2ceb771a04eb67, type: 3}
+  - {fileID: 2800000, guid: a2bf64d700ca08a4c9c7f8b8c17798fb, type: 3}
+  - {fileID: 2800000, guid: b72b4c721c5cb1e40a6d2f30e3416dd6, type: 3}
+  - {fileID: 2800000, guid: df3d11777de154349985239f5b1868f4, type: 3}
+  - {fileID: 2800000, guid: 4f4ef4310099f8e4981a9c6a8d331366, type: 3}
   _moveUpCurve:
     serializedVersion: 2
     m_Curve:

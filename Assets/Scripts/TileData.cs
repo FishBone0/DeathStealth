@@ -10,6 +10,9 @@ public class TileData : MonoBehaviour
 	TileColor[] _tilePrefabs;
 
 	[SerializeField]
+	Texture2D _startRoom;
+
+	[SerializeField]
 	Texture2D[] _roomDesigns;
 
 	[SerializeField]
@@ -54,7 +57,8 @@ public class TileData : MonoBehaviour
 		House
 	}
 
-	void Start()
+
+	void Awake()
 	{
 		if (_instance != null)
 		{
@@ -68,16 +72,26 @@ public class TileData : MonoBehaviour
 			_tileType.Add(Color.white, TileType.Floor);
 			_tileType.Add(Color.red, TileType.Enemy);
 			_tileType.Add(Color.yellow, TileType.Entrance);
-			_tileType.Add(new Color(128,64,0,255), TileType.Box);
-			_tileType.Add(new Color(127,127,127,255), TileType.Vents);
-			_tileType.Add(new Color(0,162,232,255), TileType.Spawn);
-			_tileType.Add(new Color(34,177,76,255), TileType.House);
+			_tileType.Add(new Color32(128,64,0,255), TileType.Box);
+			_tileType.Add(new Color32(127,127,127,255), TileType.Vents);
+			_tileType.Add(new Color32(0,162,232,255), TileType.Spawn);
+			_tileType.Add(new Color32(34,177,76,255), TileType.House);
 
 			foreach (TileColor __tileColor in _tilePrefabs)
 			{
 				_tileDict.Add(__tileColor.color, __tileColor.tile);
 			}
 		}
+	}
+
+	public static Texture2D GetStartRoomDesign()
+	{
+		if (_instance != null)
+		{
+			return _instance._startRoom;
+		}
+		
+		return null;
 	}
 
 	public static Texture2D GetRoomDesign()
@@ -149,6 +163,10 @@ public class TileData : MonoBehaviour
 				{
 					__tile = Instantiate(_instance._wallUp) as Tile;
 					__tile.RotateTile(270);
+				}
+				else
+				{
+					__tile = Instantiate(_instance._wallUp) as Tile;
 				}
 
 				return __tile;

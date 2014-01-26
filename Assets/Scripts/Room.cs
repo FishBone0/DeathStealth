@@ -5,9 +5,12 @@ using System.Collections.Generic;
 public class Room : MonoBehaviour {
 
 	List<Tile> _tiles = new List<Tile>();
+	int _rotation;
 
 	public static Room CreateStartRoom(Texture2D __roomDesign)
 	{
+		Debug.Log(__roomDesign);
+
 		GameObject __go = new GameObject("StartRoom");
 		Room __room = __go.AddComponent<Room>();
 
@@ -15,14 +18,13 @@ public class Room : MonoBehaviour {
 		int __width = __roomDesign.width;
 
 		TileData.TileType[] __tileTypes = new TileData.TileType[__height*__width];
-
-		int __rotation = Random.Range(0,8);
+		__room._rotation = Random.Range(0,8);
 
 		for (int __x=0;__x <__width;__x++)
 		{
 			for (int __y=0;__y<__height;__y++)
 			{
-				__tileTypes[GetIndex(__x, __y, __width, __height, __rotation)] = TileData.GetTileType(__roomDesign.GetPixel(__x, __y));
+				__tileTypes[GetIndex(__x, __y, __width, __height, __room._rotation)] = TileData.GetTileType(__roomDesign.GetPixel(__x, __y));
 
 //				Color __pixelColor = __roomDesign.GetPixel(__x, __y);
 //				Tile __tile = Tile.CreateTile(__pixelColor);
@@ -41,6 +43,11 @@ public class Room : MonoBehaviour {
 			for (int __y=0;__y<__height;__y++)
 			{
 				TileData.TileType __type = __tileTypes[GetIndex(__x, __y, __width, __height)];
+
+				if (__type == TileData.TileType.Spawn)
+				{
+					Level.startPosition = new Vector2(__x - __width / 2, __y - __height / 2);
+				}
 
 				TileData.TileType __north = TileData.TileType.None;
 				TileData.TileType __east = TileData.TileType.None;

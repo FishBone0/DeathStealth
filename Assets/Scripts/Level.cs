@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 public class Level : MonoBehaviour
 {
+	public static Vector2 startPosition;
+
 	[SerializeField]
 	GameObject _playerPrefab;
 
     List<Room> _activeRooms;
 
-	[SerializeField]
-	Texture2D[] _roomDesigns;
-
 	// Use this for initialization
 	IEnumerator Start ()
     {
-		Room.CreateStartRoom(TileData.GetRoomDesign());
+		Room.CreateStartRoom(TileData.GetStartRoomDesign());
 
-		GameObject __player = Instantiate(_playerPrefab) as GameObject;
+		//yield return new WaitForSeconds(3.0f);
+		GameObject __player = Instantiate(_playerPrefab, startPosition, Quaternion.identity) as GameObject;
 		CameraMovement.SetPlayerTransform(__player.transform);
 
 		yield break;

@@ -7,7 +7,7 @@ public class CameraMovement : MonoBehaviour {
 	Transform _playerTransform;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		if (_instance != null)
 		{
