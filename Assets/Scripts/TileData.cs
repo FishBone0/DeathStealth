@@ -5,9 +5,6 @@ using System.Collections.Generic;
 public class TileData : MonoBehaviour
 {
 	static TileData _instance;
-	
-	[SerializeField]
-	TileColor[] _tilePrefabs;
 
 	[SerializeField]
 	Texture2D _startRoom;
@@ -63,6 +60,14 @@ public class TileData : MonoBehaviour
 		House
 	}
 
+	public static SamuraiScript GetSamurai()
+	{
+		if (_instance != null)
+		{
+			return _instance._samuraiPrefab;
+		}
+		return null;
+	}
 
 	void Awake()
 	{
@@ -76,17 +81,12 @@ public class TileData : MonoBehaviour
 
 			_tileType.Add(Color.black, TileType.Wall);
 			_tileType.Add(Color.white, TileType.Floor);
-			_tileType.Add(Color.red, TileType.Enemy);
+			_tileType.Add(new Color32(237, 28, 36, 255), TileType.Enemy);
 			_tileType.Add(new Color32(255, 242, 0, 255), TileType.Entrance);
 			_tileType.Add(new Color32(128,64,0,255), TileType.Box);
 			_tileType.Add(new Color32(127,127,127,255), TileType.Vents);
 			_tileType.Add(new Color32(0,162,232,255), TileType.Spawn);
 			_tileType.Add(new Color32(34,177,76,255), TileType.House);
-
-			foreach (TileColor __tileColor in _tilePrefabs)
-			{
-				_tileDict.Add(__tileColor.color, __tileColor.tile);
-			}
 		}
 	}
 
@@ -120,6 +120,8 @@ public class TileData : MonoBehaviour
 
 		return null;
 	}
+
+	public SamuraiScript _samuraiPrefab;
 
 	public static TileType GetTileType(Color __color)
 	{
@@ -302,22 +304,6 @@ public class TileData : MonoBehaviour
 			return Instantiate(_instance._floor) as Tile;
 		}
 		
-		return null;
-	}
-
-	public static Tile GetTile(Color __color)
-	{
-		if (_instance != null)
-		{
-			if (_instance._tileDict.ContainsKey(__color))
-			{
-				return _instance._tileDict[__color];
-			}
-
-			//Return default-tile if none mathces
-			return _instance._tilePrefabs[0].tile;
-		}
-
 		return null;
 	}
 

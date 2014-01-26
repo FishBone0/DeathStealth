@@ -62,6 +62,15 @@ public class Room : MonoBehaviour {
 				if (__type == TileData.TileType.Spawn) {
 					Level.startPosition = new Vector2 (__x, __y);
 				}
+
+				if (__type== TileData.TileType.Enemy)
+				{
+					SamuraiScript __samurai = Instantiate(TileData.GetSamurai()) as SamuraiScript;
+					__samurai.roomParent = this;
+					__samurai.transform.position = new Vector3(__x, __y) + transform.position;
+				}
+
+
 				TileData.TileType __north = TileData.TileType.None;
 				TileData.TileType __east = TileData.TileType.None;
 				TileData.TileType __south = TileData.TileType.None;
@@ -428,7 +437,7 @@ public class Room : MonoBehaviour {
 		return GetRoute(__from, __to);
 	}
 
-	Vector2 WorldPosFromIndex(int __index)
+	public Vector2 WorldPosFromIndex(int __index)
 	{
 		if (_width == 0)
 		{
@@ -441,7 +450,13 @@ public class Room : MonoBehaviour {
 		return new Vector3(__x, __y) + transform.position;
 	}
 
-	List<int> GetRoute(int __from, int __to)
+	public int IndexFromWorldPos(Vector3 __pos)
+	{
+		__pos -= transform.position;
+		return Mathf.RoundToInt(__pos.x) + Mathf.RoundToInt(__pos.y) * _width;
+	}
+
+	public List<int> GetRoute(int __from, int __to)
 	{
 		int __toX = __to % _height;
 		int __toY = __to / _height;

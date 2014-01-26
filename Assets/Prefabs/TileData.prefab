@@ -38,11 +38,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3399f6301d20f2f4badbc936651abb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tilePrefabs:
-  - tile: {fileID: 11400000, guid: b95b614f0622601458a9d1fbb99f4060, type: 2}
-    color: {r: 1, g: 1, b: 1, a: 0}
-  - tile: {fileID: 11400000, guid: 36cb833d32f3f434587b270051515096, type: 2}
-    color: {r: 0, g: 0, b: 0, a: 1}
   _startRoom: {fileID: 2800000, guid: 1f6cb8ea081e24d49afec47123073408, type: 3}
   _roomDesigns:
   - {fileID: 2800000, guid: 5b26ca30960145745b5dba3a41a2fd36, type: 3}
@@ -95,6 +90,7 @@ MonoBehaviour:
   _floorWall: {fileID: 11400000, guid: b95b614f0622601458a9d1fbb99f4060, type: 2}
   _grassTile: {fileID: 11400000, guid: 556c316d747f9fb479bf215306666de2, type: 2}
   _house: {fileID: 11400000, guid: cea6cb574eb6d3243956c80088c0932a, type: 2}
+  _samuraiPrefab: {fileID: 11400000, guid: 825aebf2555864eee87eae7ef8f2f176, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

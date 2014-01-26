@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SamuraiScript : Damagable {
 	private int damage = 10;
@@ -9,7 +10,11 @@ public class SamuraiScript : Damagable {
 	private int moveSpeed = 3;
 	private GameObject target = null;
 	public Transform gib;
-	
+
+	public Room roomParent;
+
+
+
 	void Explode() {
 		for (int y = 0; y < 10; y++) {
 			Instantiate(gib, new Vector3(transform.position.x + Random.value, transform.position.y +Random.value, 0), Quaternion.identity);
@@ -96,5 +101,18 @@ public class SamuraiScript : Damagable {
 
 	void unHit(){
 		anim.SetBool("hit", false);
+	}
+
+	void CheckRoute()
+	{
+		int __from = roomParent.IndexFromWorldPos(transform.position);
+		int __to = roomParent.IndexFromWorldPos(PlayerControl.Instance.transform.position);
+
+		List<int> __wayPoints = roomParent.GetRoute(__from, __to);
+		if (__wayPoints.Count>1)
+		{
+			Vector2 __goTo = roomParent.WorldPosFromIndex(__wayPoints[1]);
+			Debug.DrawLine(__goTo, transform.position);
+		}
 	}
 }

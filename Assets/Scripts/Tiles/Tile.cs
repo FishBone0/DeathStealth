@@ -42,21 +42,6 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	public static Tile CreateTile(Color __pixelColor)
-	{
-		Tile __tilePrefab = TileData.GetTile(__pixelColor);
-
-		if (__tilePrefab != null)
-		{
-			Tile __tile = Instantiate(__tilePrefab) as Tile;
-			return __tile;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
 	void Awake()
 	{
 		__origPos = _tileSprite.localPosition;
